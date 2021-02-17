@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+
+development:
+  <<: *default
+  database: fbc_development
+
+
+test:
+  <<: *default
+  database: fbc_test
+
+
+production:
+  <<: *default
+  database: fbc_production
+  username: fbc
+  password: <%= ENV['FBC_DATABASE_PASSWORD'] %>
