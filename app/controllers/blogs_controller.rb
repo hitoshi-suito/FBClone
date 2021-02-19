@@ -5,8 +5,16 @@ class BlogsController < ApplicationController
   end
 
   def create
-    Blog.create(blog_params)
-    redirect_to new_blog_path
+    @blog = Blog.new(blog_params)
+      if params[:back]
+        render :new
+      else
+        if @blog.save
+          redirect_to new_blog_path, notice: "ブログを作成しました"
+        else
+          render :new
+        end
+      end
   end
 
   def new
@@ -30,6 +38,10 @@ class BlogsController < ApplicationController
   def destroy
     @blog.destroy
     redirect_to blogs_path, notice:"ブログを削除しました"
+  end
+
+  def confirm
+    @blog = Blog.new(blog_params)
   end
 
   private
