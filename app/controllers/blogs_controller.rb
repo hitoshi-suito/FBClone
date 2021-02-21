@@ -6,6 +6,7 @@ class BlogsController < ApplicationController
 
   def create
     @blog = Blog.new(blog_params)
+    @blog.user_id = current_user.id
       if params[:back]
         render :new
       else
@@ -42,11 +43,12 @@ class BlogsController < ApplicationController
 
   def confirm
     @blog = Blog.new(blog_params)
+    @blog.user_id = current_user.id
   end
 
   private
   def blog_params
-    params.require(:blog).permit(:content)
+    params.require(:blog).permit(:content, :image, :image_cache)
   end
 
   def set_blog
